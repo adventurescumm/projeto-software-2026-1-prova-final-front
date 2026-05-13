@@ -14,7 +14,7 @@ function parseJwt(token) {
   }
 }
 
-function App() {
+export default function App() {
   const {
     isAuthenticated,
     isLoading,
@@ -32,7 +32,6 @@ function App() {
     name: "",
     email: "",
     name_instructor: "",
-    code_course: "",
     status: "DISPONIVEL",
   });
 
@@ -46,6 +45,7 @@ function App() {
   useEffect(() => {
     async function loadToken() {
       if (!isAuthenticated) return;
+
       try {
         const accessToken = await getAccessTokenSilently();
         setToken(accessToken);
@@ -116,7 +116,6 @@ function App() {
           name: form.name,
           email: form.email,
           name_instructor: form.name_instructor,
-          code_course: Number(form.code_course),
           status: form.status,
         }),
       });
@@ -129,7 +128,6 @@ function App() {
         name: "",
         email: "",
         name_instructor: "",
-        code_course: "",
         status: "DISPONIVEL",
       });
 
@@ -167,13 +165,13 @@ function App() {
   }
 
   if (isLoading) {
-    return <div className="p-6">Carregando...</div>;
+    return <div className="page">Carregando...</div>;
   }
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
-        <button className="btn" onClick={() => loginWithRedirect()}>
+      <div className="page center">
+        <button className="btn primary" onClick={() => loginWithRedirect()}>
           Entrar com Auth0
         </button>
       </div>
@@ -181,8 +179,8 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
-      <div className="mx-auto max-w-5xl space-y-6">
+    <div className="page">
+      <div className="container">
         <header className="card header">
           <div>
             <h1 className="title">Cursos</h1>
@@ -199,7 +197,7 @@ function App() {
           </button>
         </header>
 
-        {error && <div className="error-box">{error}</div>}
+        {error && <div className="card error">{error}</div>}
 
         {role === "ADMIN" && (
           <form onSubmit={handleCreateCourse} className="card form-grid">
@@ -229,17 +227,6 @@ function App() {
               required
             />
 
-            <input
-              className="input"
-              type="number"
-              placeholder="Código do curso"
-              value={form.code_course}
-              onChange={(e) =>
-                setForm({ ...form, code_course: e.target.value })
-              }
-              required
-            />
-
             <select
               className="input"
               value={form.status}
@@ -255,14 +242,14 @@ function App() {
           </form>
         )}
 
-        <section className="grid gap-4">
+        <section className="grid">
           {courses.length === 0 ? (
             <div className="card">Nenhum curso cadastrado.</div>
           ) : (
             courses.map((course) => (
               <article
                 key={course.id}
-                className="card course-item flex items-start justify-between gap-4"
+                className="card course-item"
               >
                 <div>
                   <h2 className="course-name">{course.name}</h2>
@@ -296,5 +283,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
