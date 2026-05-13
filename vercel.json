@@ -10,7 +10,7 @@
     },
     {
       "source": "/api/courses/:path*",
-      "destination": "http://56.124.87.158:80/courses/:path*"
+      "destination": "http://18.228.48.67:80/courses/:path*"
     }
   ]
 }
