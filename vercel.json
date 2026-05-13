@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/users/:path*",
+      "destination": "http://18.228.48.67/users/:path*"
+    },
+    {
+      "source": "/api/connections/:path*",
+      "destination": "http://18.228.48.67:8080/connections/:path*"
+    },
+    {
+      "source": "/api/courses/:path*",
+      "destination": "http://56.124.87.158:80/courses/:path*"
+    }
+  ]
+}
